@@ -9,39 +9,26 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-/**
- * JSON config for all buckets.
- *  - Physical: perLevel/maxReduction + physicalOverrideEnabled (return to vanilla when false)
- *  - Magic:    magicPerLevel/magicMaxReduction + enableMagicEnchant
- *  - Fire:     firePerLevel/fireMaxReduction + overrideFireEnabled (zero vanilla FIRE prot when true)
- *  - Blast:    blastPerLevel/blastMaxReduction + overrideBlastEnabled
- *  - Projectile: projPerLevel/projMaxReduction + overrideProjectileEnabled
- */
 public final class PEOConfig {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     private static final File FILE = new File("config/protection_enchant_overhaul.json");
 
-    // Physical
     public static float perLevel = 0.0525f;
     public static float maxReduction = 0.75f;
     public static boolean physicalOverrideEnabled = true;
 
-    // Magic
     public static float magicPerLevel = 0.06f;
     public static float magicMaxReduction = 0.80f;
     public static boolean enableMagicEnchant = true;
 
-    // Fire (requested: 6.25% per level, cap 87%)
     public static float firePerLevel = 0.0625f;
     public static float fireMaxReduction = 0.87f;
     public static boolean overrideFireEnabled = true;
 
-    // Blast (requested: 6% per level, cap 85%)
     public static float blastPerLevel = 0.06f;
     public static float blastMaxReduction = 0.85f;
     public static boolean overrideBlastEnabled = true;
 
-    // Projectile (requested: 5.5% per level, cap 78%)
     public static float projPerLevel = 0.055f;
     public static float projMaxReduction = 0.78f;
     public static boolean overrideProjectileEnabled = true;
@@ -100,7 +87,6 @@ public final class PEOConfig {
         return Math.max(min, Math.min(max, v));
     }
 
-    // Boxed types -> missing fields won't overwrite defaults.
     private static class Data {
         Float perLevel, maxReduction, magicPerLevel, magicMaxReduction;
         Boolean physicalOverrideEnabled, enableMagicEnchant;
