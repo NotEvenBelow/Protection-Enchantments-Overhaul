@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "protection_enchant_overhaul",
+  "version": "${version}",
+  "name": "Protection Enchant Overhaul",
+  "description": "Reworks protection enchantments in specific scenarios",
+  "authors": ["NotEvenBelow"],
+  "license": "LGPL-3.0-only",
+  "icon": "assets/protection_enchant_overhaul/icon.png",
+  "contact": {
+    "sources": "https://github.com/NotEvenBelow/Protection-Enchantments-Overhaul",
+    "issues": "https://github.com/NotEvenBelow/Protection-Enchantments-Overhaul/issues",
+    "homepage": "https://modrinth.com/mod/protection-enchantments-overhaul"
+  },
+  "environment": "*",
+  "entrypoints": {
+    "main": ["protection_enchant_overhaul.ProtectionEnchantOverhaul"],
+    "modmenu": ["protection_enchant_overhaul.client.PEOModMenu"]
+  },
+  "mixins": ["protection_enchant_overhaul.mixins.json"],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "~${minecraft_version}",
+    "java": ">=17"
+  },
+  "suggests": {
+    "cloth-config2": "*",
+    "modmenu": "*"
+  }
+}

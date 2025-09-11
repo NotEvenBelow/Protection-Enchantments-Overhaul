@@ -1,0 +1,11 @@
+{
+  "required": true,
+  "package": "protection_enchant_overhaul.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "DisableVanillaProtMixin",
+    "LivingDamageScalingMixin",
+    "ItemEntityDamageImmunityMixin"
+  ],
+  "injectors": { "defaultRequire": 1 }
+}

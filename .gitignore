@@ -1,0 +1,26 @@
+# build outputs
+/build/
+/.gradle/
+.gradle/
+/out/
+
+# Loom run dirs
+/run/
+/remappedSrc/
+
+# IDE
+/.idea/
+/*.iml
+/.vscode/
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Logs
+*.log
+
+# Gradle wrapper jars are OK to commit, but not caches
+.gradle/
+/**/.classpath
+/**/.project
