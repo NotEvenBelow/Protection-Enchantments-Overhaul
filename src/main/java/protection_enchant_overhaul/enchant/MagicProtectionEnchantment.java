@@ -28,22 +28,21 @@ public class MagicProtectionEnchantment extends Enchantment {
 
     @Override
     public boolean isTreasure() {
-        return false; // so it can show up in normal enchanting / loot
+        return false; 
     }
 
     @Override
     public boolean isAvailableForRandomSelection() {
-        return true;  // enchanting table + loot rolls
+        return true;  
     }
 
     @Override
     public boolean isAvailableForEnchantedBookOffer() {
-        return true;  // librarian trades
+        return true; 
     }
 
     @Override
     protected boolean canAccept(Enchantment other) {
-        // prevent dupes + conflict with vanilla Protection
         return other != this && !(other instanceof ProtectionEnchantment) && super.canAccept(other);
     }
 }
