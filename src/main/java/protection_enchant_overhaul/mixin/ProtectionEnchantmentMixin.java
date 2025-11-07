@@ -12,10 +12,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-/**
- * Disables vanilla Protection (ALL) reduction.
- * Other Protection types (Fire/Blast/Projectile/Fall) behave vanilla.
- */
+
 @Mixin(ProtectionEnchantment.class)
 public abstract class ProtectionEnchantmentMixin {
 
@@ -24,7 +21,7 @@ public abstract class ProtectionEnchantmentMixin {
     private void peo$disableVanillaProt(int level, DamageSource source, CallbackInfoReturnable<Integer> cir) {
         Enchantment self = (Enchantment)(Object)this;
         if (self == Enchantments.PROTECTION) {
-            // always return 0 for generic Protection
+
             cir.setReturnValue(0);
         }
     }

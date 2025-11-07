@@ -14,11 +14,6 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import protection_enchant_overhaul.ProtectionEnchantOverhaul;
 import protection_enchant_overhaul.config.PEOConfig;
 
-/**
- * Single-point damage scaler. Priority:
- * MAGIC > BLAST > FIRE > PROJECTILE > PHYSICAL
- * Only one path applies per hit.
- */
 @Mixin(LivingEntity.class)
 public abstract class LivingDamageScalingMixin {
 
@@ -27,7 +22,7 @@ public abstract class LivingDamageScalingMixin {
     private float peo$applyEnchantReductions(float amount, DamageSource source) {
         LivingEntity self = (LivingEntity)(Object)this;
 
-        // --- MAGIC (independent toggle) ---
+        // MAGIC
         if (PEOConfig.enableMagicEnchant
                 && ProtectionEnchantOverhaul.MAGIC_PROTECTION != null
                 && (source.isOf(DamageTypes.MAGIC) || source.isOf(DamageTypes.INDIRECT_MAGIC))) {
@@ -36,28 +31,28 @@ public abstract class LivingDamageScalingMixin {
             return amount;
         }
 
-        // --- BLAST ---
+        // BLAST
         if (PEOConfig.overrideBlastEnabled && source.isIn(DamageTypeTags.IS_EXPLOSION)) {
             int lv = levels(self, Enchantments.BLAST_PROTECTION);
             if (lv > 0) return scale(amount, lv * PEOConfig.blastPerLevel, PEOConfig.blastMaxReduction);
             return amount;
         }
 
-        // --- FIRE ---
+        // FIRE
         if (PEOConfig.overrideFireEnabled && source.isIn(DamageTypeTags.IS_FIRE)) {
             int lv = levels(self, Enchantments.FIRE_PROTECTION);
             if (lv > 0) return scale(amount, lv * PEOConfig.firePerLevel, PEOConfig.fireMaxReduction);
             return amount;
         }
 
-        // --- PROJECTILE ---
-        if (PEOConfig.overrideProjectileEnabled && source.isIn(DamageTypeTags.IS_PROJECTILE)) {
+        // PROJECTILE
+        if (source.isIn(DamageTypeTags.IS_PROJECTILE) && PEOConfig.overrideProjectileEnabled) {
             int lv = levels(self, Enchantments.PROJECTILE_PROTECTION);
             if (lv > 0) return scale(amount, lv * PEOConfig.projPerLevel, PEOConfig.projMaxReduction);
             return amount;
         }
 
-        // --- PHYSICAL (only when our override is ON; skip non-physical buckets) ---
+        // PHYSICAL
         if (PEOConfig.physicalOverrideEnabled) {
             if (source.isIn(DamageTypeTags.BYPASSES_ARMOR))  return amount;
             if (source.isOf(DamageTypes.MAGIC) || source.isOf(DamageTypes.INDIRECT_MAGIC)) return amount;

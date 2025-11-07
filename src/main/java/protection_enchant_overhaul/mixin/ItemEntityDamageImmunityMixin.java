@@ -13,16 +13,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-/**
- * Prevent destroying enchanted armor items:
- * - Any item stack with vanilla PROTECTION cannot be destroyed by CACTUS.
- * - Any item stack with FIRE_PROTECTION cannot be destroyed by FIRE/LAVA/etc.
- * - Any item stack with BLAST_PROTECTION cannot be destroyed by explosion damage.
- *
- * Notes:
- * - This affects the item entity while dropped on the ground.
- * - We don't touch projectile here (you didn't ask for projectile immunity).
- */
+
 @Mixin(ItemEntity.class)
 public abstract class ItemEntityDamageImmunityMixin {
     @Shadow public abstract ItemStack getStack();
@@ -33,21 +24,21 @@ public abstract class ItemEntityDamageImmunityMixin {
         ItemStack stack = this.getStack();
         if (stack.isEmpty()) return;
 
-        // Physical -> cactus immunity
+
         if (source.isOf(DamageTypes.CACTUS)
                 && EnchantmentHelper.getLevel(Enchantments.PROTECTION, stack) > 0) {
             cir.setReturnValue(false); // ignore damage -> don't despawn
             return;
         }
 
-        // Fire -> fire immunity (in_fire, on_fire, lava, etc. all tagged as IS_FIRE)
+
         if (source.isIn(DamageTypeTags.IS_FIRE)
                 && EnchantmentHelper.getLevel(Enchantments.FIRE_PROTECTION, stack) > 0) {
             cir.setReturnValue(false);
             return;
         }
 
-        // Blast -> explosion immunity
+
         if (source.isIn(DamageTypeTags.IS_EXPLOSION)
                 && EnchantmentHelper.getLevel(Enchantments.BLAST_PROTECTION, stack) > 0) {
             cir.setReturnValue(false);

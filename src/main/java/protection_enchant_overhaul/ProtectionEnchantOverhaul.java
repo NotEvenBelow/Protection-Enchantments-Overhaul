@@ -11,12 +11,13 @@ import protection_enchant_overhaul.enchant.MagicProtectionEnchantment;
 public class ProtectionEnchantOverhaul implements ModInitializer {
     public static final String MODID = "protection_enchant_overhaul";
 
-    public static Enchantment MAGIC_PROTECTION; 
+    public static Enchantment MAGIC_PROTECTION; // may be null if disabled
 
     @Override
     public void onInitialize() {
         PEOConfig.load();
 
+        // Register Magic Protection only if config says so
         if (PEOConfig.enableMagicEnchant) {
             MAGIC_PROTECTION = Registry.register(
                     Registries.ENCHANTMENT,

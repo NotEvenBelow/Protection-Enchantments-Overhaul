@@ -1,3 +1,4 @@
+// file: src/main/java/protection_enchant_overhaul/config/PEOConfig.java
 package protection_enchant_overhaul.config;
 
 import com.google.gson.Gson;
@@ -13,25 +14,38 @@ public final class PEOConfig {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     private static final File FILE = new File("config/protection_enchant_overhaul.json");
 
+    // Physical
     public static float perLevel = 0.0525f;
     public static float maxReduction = 0.75f;
     public static boolean physicalOverrideEnabled = true;
 
+    // Magic
     public static float magicPerLevel = 0.06f;
     public static float magicMaxReduction = 0.80f;
     public static boolean enableMagicEnchant = true;
 
+    // Fire
     public static float firePerLevel = 0.0625f;
     public static float fireMaxReduction = 0.87f;
     public static boolean overrideFireEnabled = true;
 
+    // Blast
     public static float blastPerLevel = 0.06f;
     public static float blastMaxReduction = 0.85f;
     public static boolean overrideBlastEnabled = true;
 
+    // Projectile (legacy reduction path — still supported)
     public static float projPerLevel = 0.055f;
     public static float projMaxReduction = 0.78f;
-    public static boolean overrideProjectileEnabled = true;
+    public static boolean overrideProjectileEnabled = false;
+
+    // Projectile reflection/ricochet
+    public static boolean projectileReflectionEnabled = true;
+    public static float projectileReflectionRangeBlocks = 4.0f;                 // ~how far the ricochet travels
+    public static float projectileReflectionBonusDamagePerLevelAbove1 = 0.25f;  // +25% per level above 1
+
+    // Enchanting
+    public static boolean equalizeProtWeights = true;
 
     private PEOConfig() {}
 
@@ -61,6 +75,16 @@ public final class PEOConfig {
             if (d.projPerLevel != null)             projPerLevel = clamp(d.projPerLevel, 0f, 1f);
             if (d.projMaxReduction != null)         projMaxReduction = clamp(d.projMaxReduction, 0f, 0.95f);
             if (d.overrideProjectileEnabled != null) overrideProjectileEnabled = d.overrideProjectileEnabled;
+
+            if (d.projectileReflectionEnabled != null) projectileReflectionEnabled = d.projectileReflectionEnabled;
+            if (d.projectileReflectionRangeBlocks != null)
+                projectileReflectionRangeBlocks = clamp(d.projectileReflectionRangeBlocks, 0.5f, 10f);
+            if (d.projectileReflectionBonusDamagePerLevelAbove1 != null)
+                projectileReflectionBonusDamagePerLevelAbove1 =
+                        clamp(d.projectileReflectionBonusDamagePerLevelAbove1, 0f, 5f);
+
+            if (d.equalizeProtWeights != null)      equalizeProtWeights = d.equalizeProtWeights;
+
         } catch (IOException e) {
             e.printStackTrace();
             save();
@@ -76,7 +100,10 @@ public final class PEOConfig {
                         physicalOverrideEnabled, enableMagicEnchant,
                         firePerLevel, fireMaxReduction, overrideFireEnabled,
                         blastPerLevel, blastMaxReduction, overrideBlastEnabled,
-                        projPerLevel, projMaxReduction, overrideProjectileEnabled
+                        projPerLevel, projMaxReduction, overrideProjectileEnabled,
+                        projectileReflectionEnabled, projectileReflectionRangeBlocks,
+                        projectileReflectionBonusDamagePerLevelAbove1,
+                        equalizeProtWeights
                 ), w);
             }
         } catch (IOException e) { e.printStackTrace(); }
@@ -97,17 +124,30 @@ public final class PEOConfig {
         Float projPerLevel, projMaxReduction;
         Boolean overrideProjectileEnabled;
 
+        Boolean projectileReflectionEnabled;
+        Float projectileReflectionRangeBlocks;
+        Float projectileReflectionBonusDamagePerLevelAbove1;
+
+        Boolean equalizeProtWeights;
+
         Data(float perLevel, float maxReduction, float magicPerLevel, float magicMaxReduction,
              boolean physicalOverrideEnabled, boolean enableMagicEnchant,
              float firePerLevel, float fireMaxReduction, boolean overrideFireEnabled,
              float blastPerLevel, float blastMaxReduction, boolean overrideBlastEnabled,
-             float projPerLevel, float projMaxReduction, boolean overrideProjectileEnabled) {
+             float projPerLevel, float projMaxReduction, boolean overrideProjectileEnabled,
+             boolean projectileReflectionEnabled, float projectileReflectionRangeBlocks,
+             float projectileReflectionBonusDamagePerLevelAbove1,
+             boolean equalizeProtWeights) {
             this.perLevel = perLevel; this.maxReduction = maxReduction;
             this.magicPerLevel = magicPerLevel; this.magicMaxReduction = magicMaxReduction;
             this.physicalOverrideEnabled = physicalOverrideEnabled; this.enableMagicEnchant = enableMagicEnchant;
             this.firePerLevel = firePerLevel; this.fireMaxReduction = fireMaxReduction; this.overrideFireEnabled = overrideFireEnabled;
             this.blastPerLevel = blastPerLevel; this.blastMaxReduction = blastMaxReduction; this.overrideBlastEnabled = overrideBlastEnabled;
             this.projPerLevel = projPerLevel; this.projMaxReduction = projMaxReduction; this.overrideProjectileEnabled = overrideProjectileEnabled;
+            this.projectileReflectionEnabled = projectileReflectionEnabled;
+            this.projectileReflectionRangeBlocks = projectileReflectionRangeBlocks;
+            this.projectileReflectionBonusDamagePerLevelAbove1 = projectileReflectionBonusDamagePerLevelAbove1;
+            this.equalizeProtWeights = equalizeProtWeights;
         }
     }
 }

@@ -5,7 +5,10 @@
   "mixins": [
     "DisableVanillaProtMixin",
     "LivingDamageScalingMixin",
-    "ItemEntityDamageImmunityMixin"
+    "ItemEntityDamageImmunityMixin",
+    "EqualizeProtWeightsMixin",
+    "EnchantmentLevelEntryAccessor",
+    "PersistentProjectileEntityMixin"
   ],
   "injectors": { "defaultRequire": 1 }
 }

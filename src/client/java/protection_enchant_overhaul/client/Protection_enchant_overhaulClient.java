@@ -1,4 +1,4 @@
-package protection_enchant_overhaul.protection_enchant_overhaul.client;
+package protection_enchant_overhaul.client;
 
 import net.fabricmc.api.ClientModInitializer;
 

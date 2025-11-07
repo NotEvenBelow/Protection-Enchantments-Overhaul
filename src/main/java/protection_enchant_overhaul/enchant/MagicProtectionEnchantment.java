@@ -28,21 +28,22 @@ public class MagicProtectionEnchantment extends Enchantment {
 
     @Override
     public boolean isTreasure() {
-        return false; 
+        return false;
     }
 
     @Override
     public boolean isAvailableForRandomSelection() {
-        return true;  
+        return true;
     }
 
     @Override
     public boolean isAvailableForEnchantedBookOffer() {
-        return true; 
+        return true;
     }
 
     @Override
     protected boolean canAccept(Enchantment other) {
+
         return other != this && !(other instanceof ProtectionEnchantment) && super.canAccept(other);
     }
 }
